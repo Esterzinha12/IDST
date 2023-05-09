@@ -1,30 +1,29 @@
 describe('Teste de Processo Proposta', () => {
-    cy.setCookie("jwt", "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpZHMiLCJzdWIiOiIyIiwiaWF0IjoxNjgzNTg5ODE1LCJleHAiOjE2ODM3Njk4MTV9.4Eu-pKnjlq5wIE-ZB5A52dCxxXvfvv45mKovfid5yZk");
-
     it('Criar Funcionário', () => {
+        cy.setCookie("jwt", "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpZHMiLCJzdWIiOiIyIiwiaWF0IjoxNjgzNTg5ODE1LCJleHAiOjE2ODM3Njk4MTV9.4Eu-pKnjlq5wIE-ZB5A52dCxxXvfvv45mKovfid5yZk");
         // Objeto funcionário
         const worker = {
             "workerCode": 5,
-            "workerName": "Funcionário N°5",
+            "workerName": "Funcionário",
             "corporateEmail": "funcionario@weg.net",
             "workerPassword": "123",
             "workerOffice": "requester",
             "language": "pt"
         }
 
-        cy.request('POST', "localhost:8443/api/worker", worker).as('WorkerRequest');
+        cy.request('POST', "localhost:8443/api/worker/1", worker).as('WorkerRequest');
         cy.get('@WorkerRequest').then((response) => {
             expect(response.status).to.not.eq(500);
         })
     })
 
-    it('Criar Demanda', () => {
-        // Objeto demanda
+    it('Cadastrar Demanda', () => {
+        cy.setCookie("jwt", "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpZHMiLCJzdWIiOiIyIiwiaWF0IjoxNjgzNTg5ODE1LCJleHAiOjE2ODM3Njk4MTV9.4Eu-pKnjlq5wIE-ZB5A52dCxxXvfvv45mKovfid5yZk");
         const demand = {
-            "demandTitle": "Título demanda",
-            "currentProblem": "Problema",
-            "demandObjective": "Objetivo",
-            "demandStatus": "Backlog",
+            "demandTitle": "titulo",
+            "currentProblem": "problema",
+            "demandObjective": "objetivo",
+            "demandStatus": "status",
             "score": 50,
             "executionPeriod": "1 mês",
             "requesterRegistration": { "workerCode": 5 },
@@ -34,7 +33,11 @@ describe('Teste de Processo Proposta', () => {
             "costCenter": [{ "costCenterCode": 1 }]
         }
 
-        cy.request('POST', "localhost:8443/api/demand", demand).as('DemandRequest');
+        let formData = new FormData();
+        formData.append('demandAttachment', null);
+        formData.append('demand', JSON.stringify(demand));
+
+        cy.request('POST', "localhost:8443/api/demand", formData).as('DemandRequest');
         cy.get('@DemandRequest').then((response) => {
             expect(response.status).to.not.eq(500);
         })

@@ -1,6 +1,5 @@
-
 describe('Teste de Integração Demanda', () => {
-    it('Verificar Demanda', () => {
+    it('Cadastrar Demanda', () => {
         cy.setCookie("jwt", "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpZHMiLCJzdWIiOiIyIiwiaWF0IjoxNjgzNTg5ODE1LCJleHAiOjE2ODM3Njk4MTV9.4Eu-pKnjlq5wIE-ZB5A52dCxxXvfvv45mKovfid5yZk");
         const demand = {
             "demandTitle": "titulo",
