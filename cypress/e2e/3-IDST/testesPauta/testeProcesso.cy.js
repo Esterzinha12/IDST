@@ -18,7 +18,7 @@ describe('Teste do processo Pauta', () => {
             "minuteStartDate": "2023-05-09",
             "minuteEndDate": "2023-05-30",
             "minuteType": "1",
-            "agenda": { "agendaCode": 1 },
+            "agenda": { "agendaCode": 5 },
             "director": { "workerCode": 1 }
         }
 
@@ -40,6 +40,30 @@ describe('Teste do processo Pauta', () => {
         cy.get('@CommissionRequest').then((response) => {
             expect(response.status).to.not.eq(500)
 
+        })
+    })
+    it('Cadastrar Demanda', () => {
+        const demand = {
+            "demandTitle": "titulo",
+            "currentProblem": "problema",
+            "demandObjective": "objetivo",
+            "demandStatus": "status",
+            "score": 50,
+            "executionPeriod": "1 mês",
+            "requesterRegistration": { "workerCode": 5 },
+            "realBenefit": { "realBenefitCode": 1 },
+            "qualitativeBenefit": { "qualitativeBenefitCode": 1 },
+            "potentialBenefit": { "potentialBenefitCode": 1 },
+            "costCenter": [{ "costCenterCode": 1 }]
+        }
+
+        let formData = new FormData();
+        formData.append('demandAttachment', null);
+        formData.append('demand', JSON.stringify(demand));
+
+        cy.request('POST', "localhost:8443/api/demand", formData).as('DemandRequest');
+        cy.get('@DemandRequest').then((response) => {
+            expect(response.status).to.not.eq(500);
         })
     })
 
@@ -77,9 +101,9 @@ describe('Teste do processo Pauta', () => {
             "sequentialNumber": 2,
             "yearAgenda": 2023,
             "agendaDate": "2023-05-09",
-            "minutes": [{ "minuteCode": 2 }],
-            "commission": [{ "commissionCode": 2 }],
-            "proposals": [{ "proposalCode": 2 }]
+            "minutes": [{ "minuteCode": 1 }],
+            "commission": [{ "commissionCode": 1 }],
+            "proposals": [{ "proposalCode": 1 }]
         }
 
         let sizePast;
