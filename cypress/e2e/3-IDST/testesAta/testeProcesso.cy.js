@@ -1,8 +1,19 @@
 describe('Teste do processo Ata', () => {
    
+    beforeEach(() => {
+        const user = {
+            "corporateEmail": "vytor@weg.net",
+            "workerPassword": "123"
+        }
+        cy.request('POST', "localhost:8443/login/auth", user).as('LoginRequest');
+        cy.get('@LoginRequest').then((response) => {
+            console.log(response);
+            expect(response.status).to.not.eq(500);
+        })
+    })
+
     it('Criação Comissão', () => {
 
-        cy.setCookie("jwt", "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpZHMiLCJzdWIiOiIyIiwiaWF0IjoxNjgzNTg5ODE1LCJleHAiOjE2ODM3Njk4MTV9.4Eu-pKnjlq5wIE-ZB5A52dCxxXvfvv45mKovfid5yZk");
 
         const commission = {
             "commissionCode": 20,
@@ -19,7 +30,6 @@ describe('Teste do processo Ata', () => {
 
     it('Criar Proposta', () => {
 
-        cy.setCookie("jwt", "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpZHMiLCJzdWIiOiIyIiwiaWF0IjoxNjgzNTg5ODE1LCJleHAiOjE2ODM3Njk4MTV9.4Eu-pKnjlq5wIE-ZB5A52dCxxXvfvv45mKovfid5yZk");
 
         const proposal = {
             "proposalCode": 1,
@@ -50,7 +60,6 @@ describe('Teste do processo Ata', () => {
     })
 
     it('Criação Pauta', () => {
-        cy.setCookie("jwt", "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpZHMiLCJzdWIiOiIyIiwiaWF0IjoxNjgzNTg5ODE1LCJleHAiOjE2ODM3Njk4MTV9.4Eu-pKnjlq5wIE-ZB5A52dCxxXvfvv45mKovfid5yZk");
         const agenda = {
             "sequentialNumber": 2,
             "yearAgenda": 2023,
@@ -68,7 +77,6 @@ describe('Teste do processo Ata', () => {
     })
 
     it('Criar Funcionário', () => {
-        cy.setCookie("jwt", "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpZHMiLCJzdWIiOiIyIiwiaWF0IjoxNjgzNTg5ODE1LCJleHAiOjE2ODM3Njk4MTV9.4Eu-pKnjlq5wIE-ZB5A52dCxxXvfvv45mKovfid5yZk");
         const worker = {
             "workerCode": 5,
             "workerName": "Funcionário",
@@ -85,7 +93,6 @@ describe('Teste do processo Ata', () => {
     })
    
     it('Criação Ata', () => {
-        cy.setCookie("jwt", "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpZHMiLCJzdWIiOiIyIiwiaWF0IjoxNjgzNTg5ODE1LCJleHAiOjE2ODM3Njk4MTV9.4Eu-pKnjlq5wIE-ZB5A52dCxxXvfvv45mKovfid5yZk");
         const minute = {
             "minuteName":"Ata 1",
             "minuteStartDate":"2023-05-09",
@@ -95,10 +102,20 @@ describe('Teste do processo Ata', () => {
             "director":{"workerCode": 1}
         }
 
+        let sizePast;
+
+        cy.request('GET', "localhost:8443/api/minutes").as('GETpast');
+        cy.get('@GETpast').then((response) => {
+            sizePast = response.body.length;
+        })
         cy.request('POST', "localhost:8443/api/minutes", minute).as('MinuteRequest');
         cy.get('@MinuteRequest').then((response) => {
             expect(response.status).to.not.eq(500)
 
+        })
+        cy.request('GET', "localhost:8443/api/proposal").as('GETpast');
+        cy.get('@GETpast').then((response) => {
+            expect(response.body.length).to.not.eq(sizePast)
         })
     })
 
