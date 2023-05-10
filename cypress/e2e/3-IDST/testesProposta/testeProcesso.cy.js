@@ -56,8 +56,7 @@ describe('Teste de Processo Proposta', () => {
 
     it('Criar Proposta', () => {
         const proposal = {
-            "proposalCode": 1,
-            "proposalName": "Nome da Proposta",
+            "proposalName": "VYTOR",
             "proposalStatus": "Backlog",
             "payback": 1.0,
             "initialRunPeriod": "2023-01-01",
