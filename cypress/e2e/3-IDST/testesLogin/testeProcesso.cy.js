@@ -13,9 +13,7 @@ describe('Teste de Processo Login', () => {
             expect(response.status).to.not.eq(500);
         })
     })
-})
 
-describe('Teste de Processo Login', () => {
     it('Verificar Login', () => {
         const user = {
             "corporateEmail": "alisson@weg.net",

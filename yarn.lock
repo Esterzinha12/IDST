@@ -306,10 +306,10 @@
     "shebang-command" "^2.0.0"
     "which" "^2.0.1"
 
-"cypress@^12.11.0":
-  "integrity" "sha512-TJE+CCWI26Hwr5Msb9GpQhFLubdYooW0fmlPwTsfiyxmngqc7+SZGLPeIkj2dTSSZSEtpQVzOzvcnzH0o8G7Vw=="
-  "resolved" "https://registry.npmjs.org/cypress/-/cypress-12.11.0.tgz"
-  "version" "12.11.0"
+"cypress@^12.12.0":
+  "integrity" "sha512-UU5wFQ7SMVCR/hyKok/KmzG6fpZgBHHfrXcHzDmPHWrT+UUetxFzQgt7cxCszlwfozckzwkd22dxMwl/vNkWRw=="
+  "resolved" "https://registry.npmjs.org/cypress/-/cypress-12.12.0.tgz"
+  "version" "12.12.0"
   dependencies:
     "@cypress/request" "^2.88.10"
     "@cypress/xvfb" "^1.2.4"
