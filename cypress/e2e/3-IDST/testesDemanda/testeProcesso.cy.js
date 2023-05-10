@@ -77,9 +77,19 @@ describe('Teste de Processo Demanda', () => {
         formData.append('demandAttachment', null);
         formData.append('demand', JSON.stringify(demand));
 
+        let sizePast;
+
+        cy.request('GET', "localhost:8443/api/demand").as('GETpast');
+        cy.get('@GETpast').then((response) => {
+            sizePast = response.body.length;
+        })
         cy.request('POST', "localhost:8443/api/demand", formData).as('DemandRequest');
         cy.get('@DemandRequest').then((response) => {
             expect(response.status).to.not.eq(500);
+        })
+        cy.request('GET', "localhost:8443/api/demand").as('GETDemand');
+        cy.get('@GETDemand').then((response) => {
+            expect(response.body.length).to.not.eq(sizePast)
         })
     })
 })

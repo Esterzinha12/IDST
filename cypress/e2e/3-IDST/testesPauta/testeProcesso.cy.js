@@ -82,10 +82,20 @@ describe('Teste do processo Pauta', () => {
             "proposals": [{ "proposalCode": 2 }]
         }
 
+        let sizePast;
+
+        cy.request('GET', "localhost:8443/api/agenda").as('GETpast');
+        cy.get('@GETpast').then((response) => {
+            sizePast = response.body.length;
+        })
         cy.request('POST', "localhost:8443/api/agenda", agenda).as('AgendaRequest');
         cy.get('@AgendaRequest').then((response) => {
             expect(response.status).to.not.eq(500)
 
+        })
+        cy.request('GET', "localhost:8443/api/demand").as('GETDemand');
+        cy.get('@GETDemand').then((response) => {
+            expect(response.body.length).to.not.eq(sizePast)
         })
     })
 })

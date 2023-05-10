@@ -77,9 +77,19 @@ describe('Teste de Processo Proposta', () => {
             "published": true
         }
 
+        let sizePast;
+
+        cy.request('GET', "localhost:8443/api/proposal").as('GETpast');
+        cy.get('@GETpast').then((response) => {
+            sizePast = response.body.length;
+        })
         cy.request('POST', "localhost:8443/api/proposal", proposal).as('ProposalRequest');
         cy.get('@ProposalRequest').then((response) => {
             expect(response.body).to.not.eq(500);
+        })
+        cy.request('GET', "localhost:8443/api/proposal").as('GETpast');
+        cy.get('@GETpast').then((response) => {
+            expect(response.body.length).to.not.eq(sizePast)
         })
     })
 
