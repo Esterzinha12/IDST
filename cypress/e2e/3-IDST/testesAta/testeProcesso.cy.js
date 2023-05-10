@@ -113,7 +113,7 @@ describe('Teste do processo Ata', () => {
             expect(response.status).to.not.eq(500)
 
         })
-        cy.request('GET', "localhost:8443/api/proposal").as('GETpast');
+        cy.request('GET', "localhost:8443/api/minutes").as('GETpast');
         cy.get('@GETpast').then((response) => {
             expect(response.body.length).to.not.eq(sizePast)
         })
