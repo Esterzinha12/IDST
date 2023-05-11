@@ -1,5 +1,6 @@
 describe('Teste do processo Ata', () => {
-   
+    let sizePast;
+
     beforeEach(() => {
         const user = {
             "corporateEmail": "vytor@weg.net",
@@ -92,6 +93,13 @@ describe('Teste do processo Ata', () => {
         })
     })
    
+    it('Verificar ata', () => {
+        cy.request('GET', "localhost:8443/api/minutes").as('GETpast');
+        cy.get('@GETpast').then((response) => {
+            sizePast = response.body.length;
+        })
+    })
+
     it('Criação Ata', () => {
         const minute = {
             "minuteName":"Ata 1",
@@ -101,26 +109,18 @@ describe('Teste do processo Ata', () => {
             "agenda":{"agendaCode": 5},
             "director":{"workerCode": 1}
         }
-
-        let sizePast;
-
-        cy.request('GET', "localhost:8443/api/minutes").as('GETpast');
-        cy.get('@GETpast').then((response) => {
-            sizePast = response.body.length;
-        })
+        
         cy.request('POST', "localhost:8443/api/minutes", minute).as('MinuteRequest');
         cy.get('@MinuteRequest').then((response) => {
             expect(response.status).to.not.eq(500)
 
         })
+    })
+
+    it('Verificar ata', () => {
         cy.request('GET', "localhost:8443/api/minutes").as('GETpast');
         cy.get('@GETpast').then((response) => {
             expect(response.body.length).to.not.eq(sizePast)
         })
     })
-
-
-
-
-
 })
