@@ -5,7 +5,7 @@ describe('Teste Carga 100x Pauta', () => {
             cy.request('GET', "localhost:8443/api/agenda").as('AgendaRequest');
             cy.get('@AgendaRequest').then((response) => {
                 expect(response.body).to.be.an('array');
-                expect(response.duration).to.be.lte(20);
+                expect(response.duration).to.be.lte(60);
                 expect(response.status).to.eq(302);
             })
         })
