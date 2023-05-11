@@ -1,4 +1,6 @@
 describe('Teste de Processo Demanda', () => {
+    let sizePast;
+
     beforeEach(() => {
             const user = {
                 "corporateEmail": "vytor@weg.net",
@@ -58,6 +60,13 @@ describe('Teste de Processo Demanda', () => {
         })
     })
 
+    it('Verificar demanda', () => {
+        cy.request('GET', "localhost:8443/api/demand").as('GETpast');
+        cy.get('@GETpast').then((response) => {
+            sizePast = response.body.length;
+        })
+    })
+
     it('Cadastrar Demanda', () => {
         const demand = {
             "demandTitle": "titulo",
@@ -76,21 +85,19 @@ describe('Teste de Processo Demanda', () => {
         let formData = new FormData();
         formData.append('demandAttachment', null);
         formData.append('demand', JSON.stringify(demand));
-
-        let sizePast;
-
-        cy.request('GET', "localhost:8443/api/demand").as('GETpast');
-        cy.get('@GETpast').then((response) => {
-            sizePast = response.body.length;
-        })
+        
         cy.request('POST', "localhost:8443/api/demand", formData).as('DemandRequest');
         cy.get('@DemandRequest').then((response) => {
             expect(response.status).to.not.eq(500);
         })
+    })
+
+    it("Verificar demanda", () => {
         cy.request('GET', "localhost:8443/api/demand").as('GETDemand');
         cy.get('@GETDemand').then((response) => {
             expect(response.body.length).to.not.eq(sizePast)
         })
     })
+
 })
 
