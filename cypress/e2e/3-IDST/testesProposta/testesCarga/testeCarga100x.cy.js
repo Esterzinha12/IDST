@@ -1,5 +1,5 @@
 describe('Teste de Carga 100x Proposta', () => {
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 100; i++) {
         it('Verificar Proposta', () => {
             cy.setCookie("jwt", "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpZHMiLCJzdWIiOiIyIiwiaWF0IjoxNjgzNTg5ODE1LCJleHAiOjE2ODM3Njk4MTV9.4Eu-pKnjlq5wIE-ZB5A52dCxxXvfvv45mKovfid5yZk");
             cy.request('GET', "localhost:8443/api/proposal").as('ProposalRequest');

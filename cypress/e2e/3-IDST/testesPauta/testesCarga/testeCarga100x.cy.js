@@ -1,4 +1,4 @@
-describe('Teste Carga Pauta', () => {
+describe('Teste Carga 100x Pauta', () => {
     for (let i = 0; i < 100; i++) {
         it('Verificar Pauta', () => {
             cy.setCookie("jwt", "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpZHMiLCJzdWIiOiIyIiwiaWF0IjoxNjgzNTg5ODE1LCJleHAiOjE2ODM3Njk4MTV9.4Eu-pKnjlq5wIE-ZB5A52dCxxXvfvv45mKovfid5yZk");

@@ -1,4 +1,4 @@
-describe('Teste de Carga Login', () => {
+describe('Teste de Carga 500x Login', () => {
     it('Verificar Login', () => {
         const user = {
             "corporateEmail": "vytor@weg.net",
