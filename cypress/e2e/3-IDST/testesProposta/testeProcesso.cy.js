@@ -1,4 +1,7 @@
+const { it } = require("node:test");
+
 describe('Teste de Processo Proposta', () => {
+    let sizePast;
 
     beforeEach(() => {
         const user = {
@@ -54,6 +57,13 @@ describe('Teste de Processo Proposta', () => {
         })
     })
 
+    it('Buscar lista de Proposta', () => {
+        cy.request('GET', "localhost:8443/api/proposal").as('GETpast');
+        cy.get('@GETpast').then((response) => {
+            sizePast = response.body.length;
+        })
+    })
+
     it('Criar Proposta', () => {
         const proposal = {
             "proposalName": "VYTOR",
@@ -76,16 +86,13 @@ describe('Teste de Processo Proposta', () => {
             "published": true
         }
 
-        let sizePast;
-
-        cy.request('GET', "localhost:8443/api/proposal").as('GETpast');
-        cy.get('@GETpast').then((response) => {
-            sizePast = response.body.length;
-        })
         cy.request('POST', "localhost:8443/api/proposal", proposal).as('ProposalRequest');
         cy.get('@ProposalRequest').then((response) => {
             expect(response.body).to.not.eq(500);
         })
+    })
+
+    it('Verificação do tamanho da lista', () => {
         cy.request('GET', "localhost:8443/api/proposal").as('GETpast');
         cy.get('@GETpast').then((response) => {
             expect(response.body.length).to.not.eq(sizePast)
