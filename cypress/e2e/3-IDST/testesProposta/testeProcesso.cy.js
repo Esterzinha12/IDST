@@ -1,5 +1,3 @@
-const { it } = require("node:test");
-
 describe('Teste de Processo Proposta', () => {
     let sizePast;
 
