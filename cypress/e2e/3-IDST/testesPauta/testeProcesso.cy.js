@@ -1,4 +1,7 @@
+const { it } = require("node:test");
+
 describe('Teste do processo Pauta', () => {
+    let sizePast;
 
     beforeEach(() => {
         const user = {
@@ -96,6 +99,14 @@ describe('Teste do processo Pauta', () => {
         })
     })
 
+    
+    it('Buscar lista de Pautas', () => {
+        cy.request('GET', "localhost:8443/api/agenda").as('GETpast');
+        cy.get('@GETpast').then((response) => {
+            sizePast = response.body.length;
+        })
+    })
+
     it('Criação Pauta', () => {
         const agenda = {
             "sequentialNumber": 2,
@@ -106,17 +117,14 @@ describe('Teste do processo Pauta', () => {
             "proposals": [{ "proposalCode": 1 }]
         }
 
-        let sizePast;
-
-        cy.request('GET', "localhost:8443/api/agenda").as('GETpast');
-        cy.get('@GETpast').then((response) => {
-            sizePast = response.body.length;
-        })
         cy.request('POST', "localhost:8443/api/agenda", agenda).as('AgendaRequest');
         cy.get('@AgendaRequest').then((response) => {
             expect(response.status).to.not.eq(500)
 
         })
+    })
+
+    it('Verifica tamanho da lista', () => {
         cy.request('GET', "localhost:8443/api/agenda").as('GETDemand');
         cy.get('@GETDemand').then((response) => {
             expect(response.body.length).to.not.eq(sizePast)
