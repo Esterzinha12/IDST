@@ -4,6 +4,7 @@ describe('Teste de Integração', () => {
         cy.request('GET', "localhost:8443/api/minutes").as('MinuteRequest');
         cy.get('@MinuteRequest').then((response) => {
             expect(response.body).to.be.an('array');
+            expect(response.status).to.eq(302);
         })
     })
 })
