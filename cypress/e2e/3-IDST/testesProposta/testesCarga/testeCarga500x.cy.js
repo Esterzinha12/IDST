@@ -1,7 +1,18 @@
 describe('Teste de Carga 500x Proposta', () => {
+    beforeEach(() => {
+        const user = {
+            "corporateEmail": "vytor@weg.net",
+            "workerPassword": "123"
+        }
+        cy.request('POST', "localhost:8443/login/auth", user).as('LoginRequest');
+        cy.get('@LoginRequest').then((response) => {
+            console.log(response);
+            expect(response.status).to.not.eq(500);
+        })
+    })
+
     for (let i = 0; i < 500; i++) {
         it('Verificar Proposta', () => {
-            cy.setCookie("jwt", "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJpZHMiLCJzdWIiOiIyIiwiaWF0IjoxNjgzNTg5ODE1LCJleHAiOjE2ODM3Njk4MTV9.4Eu-pKnjlq5wIE-ZB5A52dCxxXvfvv45mKovfid5yZk");
             cy.request('GET', "localhost:8443/api/proposal").as('ProposalRequest');
             cy.get('@ProposalRequest').then((response) => {
                 expect(response.body).to.be.an('array');
